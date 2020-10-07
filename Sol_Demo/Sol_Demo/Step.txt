@@ -1,0 +1,41 @@
+﻿Step 1:
+Make controller class and add end point with comments. (Check Customer Controller class) Note : it is use for the demo purpose.
+
+Step 2:
+Generate XML documentation file.
+Go to Api Solution file -> Edit Project File. 
+
+<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+</PropertyGroup>
+
+Step 3:
+Download following nuget package.
+Swashbuckle.AspNetCore
+
+Step 4:
+Go to StartUp file, 
+
+    3.1 Add the following code in ConfigureServices Method.
+    services.AddSwaggerGen((config) =>
+                {
+                    config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "Swagger Demo Api",
+                        Description = "Demo api for showing Swagger",
+                        Version = "v1"
+                    });
+
+                     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
+
+                    config.IncludeXmlComments(xmlFilePath);
+
+                });
+
+    3.2 Add the following code in Configure Method
+
+Step 4:
+Lauch swagger documentation url when the service build.
+Go to launchsetting.json -> Find launchUrl json property. -> remove the old endpoint and add the new endpoint (swagger)
